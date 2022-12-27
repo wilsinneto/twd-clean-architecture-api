@@ -26,4 +26,9 @@ describe('Email validation', () => {
     const email: string = 'l'.repeat(64) + '@' + 'd'.repeat(128) + '.' + 'd'.repeat(127)
     expect(Email.validate(email)).toBeFalsy()
   })
+
+  test('should not accept domain part larger than 255 chars', () => {
+    const email: string = 'local@' + 'd'.repeat(128) + '.' + 'd'.repeat(127)
+    expect(Email.validate(email)).toBeFalsy()
+  })
 })
