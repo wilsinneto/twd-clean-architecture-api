@@ -1,5 +1,5 @@
-import { UserData } from "../../../entities/user-data"
-import { InMemoryUserRepository } from "./in-memory-user-repository"
+import { UserData } from '../../../../src/entities/user-data'
+import { InMemoryUserRepository } from './in-memory-user-repository'
 
 describe('In memory User repository', () => {
   test('should return null if user is not found', async () => {
@@ -21,8 +21,8 @@ describe('In memory User repository', () => {
 
   test('should return all users in the repository', async () => {
     const users: UserData[] = [
-      { name: 'any_name', email: 'any@mail.com'},
-      { name: 'second_name', email: 'second@mail.com'}
+      { name: 'any_name', email: 'any@mail.com' },
+      { name: 'second_name', email: 'second@mail.com' }
     ]
 
     const sut = new InMemoryUserRepository(users)
