@@ -1,5 +1,5 @@
-import { Either, left, right } from "../shared/either"
-import { InvalidEmailError } from "./errors/invalid-email-error"
+import { Either, left, right } from '../shared/either'
+import { InvalidEmailError } from './errors/invalid-email-error'
 
 export class Email {
   public readonly value: string
@@ -13,17 +13,17 @@ export class Email {
       return right(new Email(email))
     }
 
-    return left(new InvalidEmailError())
+    return left(new InvalidEmailError(email))
   }
 
-  static validate(email: string) {
+  static validate (email: string) {
     const emailRegex = /^[-!#$%&'*+/0-9=?A-Z^_a-z`{|}~](\.?[-!#$%&'*+/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-*\.?[a-zA-Z0-9])*\.[a-zA-Z](-?[a-zA-z0-9])+$/
 
     if (!emailRegex.test(email)) {
       return false
     }
 
-    if(!email) {
+    if (!email) {
       return false
     }
 
