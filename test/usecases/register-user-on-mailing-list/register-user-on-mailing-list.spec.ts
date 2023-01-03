@@ -1,7 +1,7 @@
-import { UserData } from '../../../src/entities/user-data'
-import { UserRepository } from '../../../src/usecases/ports/user-repository'
-import { RegisterUserOnMailingList } from '../../../src/usecases/register-user-on-mailing-list/register-user-on-mailing-list'
-import { InMemoryUserRepository } from './repository/in-memory-user-repository'
+import { UserData } from '@/entities'
+import { UserRepository } from '@/usecases/ports'
+import { RegisterUserOnMailingList } from '@/usecases/register-user-on-mailing-list'
+import { InMemoryUserRepository } from '@test/usecases/register-user-on-mailing-list/repository'
 
 describe('Register user on mailing list use case', () => {
   test('should add user with complete data to mailing list', async () => {
