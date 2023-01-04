@@ -1,13 +1,13 @@
 import { UserData } from '@/entities'
-import { RegisterUserOnMailingList } from '@/usecases/register-user-on-mailing-list'
+import { UseCase } from '@/usecases/ports'
 import { MissingParamError } from './errors/missing-param-error'
 import { HttpRequest, HttpResponse } from './ports'
 import { badRequest, created, serverError } from './util/http-helper'
 
 export class RegisterUserController {
-  private readonly usecase: RegisterUserOnMailingList
+  private readonly usecase: UseCase
 
-  constructor (usecase: RegisterUserOnMailingList) {
+  constructor (usecase: UseCase) {
     this.usecase = usecase
   }
 
