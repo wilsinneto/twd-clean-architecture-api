@@ -1,4 +1,4 @@
-import { User, UserData } from '@/entities'
+import { UserData } from '@/entities'
 import { Either, right } from '@/shared'
 import { MailServiceError } from '@/usecases/errors'
 import { RegisterAndSendEmail } from '@/usecases/register-and-send-email'
@@ -43,7 +43,7 @@ describe('Register and send email to user', () => {
     }
   }
 
-  test('should add user with complete data to mailing list', async () => {
+  test('should register user and send him/her an email with valid data', async () => {
     const users: UserData[] = []
     const repo: UserRepository = new InMemoryUserRepository(users)
     const registerUseCase: RegisterUserOnMailingList = new RegisterUserOnMailingList(repo)
@@ -53,16 +53,15 @@ describe('Register and send email to user', () => {
     const name = 'any_name'
     const email = 'any@email.com'
 
-    const response = (await registerAndSendEmailUseCase.perform({ name, email })).value as User
+    const response: UserData = (await registerAndSendEmailUseCase.perform({ name, email })).value as UserData
     const user = repo.findUserByEmail('any@email.com')
 
     expect((await user).name).toBe('any_name')
-    expect(response.name.value).toBe('any_name')
+    expect(response.name).toBe('any_name')
     expect(mailServiceMock.timesSendWasCalled).toBe(1)
-    expect(response.name.value).toEqual('any_name')
   })
 
-  test('should not add user with invalid email', async () => {
+  test('should not register user and send him/her an email with invalid email', async () => {
     const users: UserData[] = []
     const repo: UserRepository = new InMemoryUserRepository(users)
     const registerUseCase: RegisterUserOnMailingList = new RegisterUserOnMailingList(repo)
@@ -77,7 +76,7 @@ describe('Register and send email to user', () => {
     expect(response.name).toEqual('InvalidEmailError')
   })
 
-  test('should not add user with invalid name', async () => {
+  test('should not register user and send him/her an email with invalid name', async () => {
     const users: UserData[] = []
     const repo: UserRepository = new InMemoryUserRepository(users)
     const registerUseCase: RegisterUserOnMailingList = new RegisterUserOnMailingList(repo)
