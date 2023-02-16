@@ -1,8 +1,6 @@
-import { InvalidEmailError, InvalidNameError } from '@/entities/errors'
 
 import { User, UserData } from '@/entities'
 
-import { Either, left, right } from '@/shared'
 import { UseCase } from '@/usecases/ports'
 import { UserRepository } from '@/usecases/register-user-on-mailing-list/ports'
 
@@ -13,18 +11,16 @@ export class RegisterUserOnMailingList implements UseCase {
     this.userRepo = userRepo
   }
 
-  public async perform (request: UserData):
-    Promise<Either<InvalidNameError | InvalidEmailError, UserData>> {
-    const userOrError: Either<InvalidNameError | InvalidEmailError, User> = User.create(request)
-
-    if (userOrError.isLeft()) {
-      return left(userOrError.value)
+  public async perform (request: User): Promise<UserData> {
+    const userData = {
+      name: request.name.value,
+      email: request.email.value
     }
 
-    if (!(await this.userRepo.exists(request))) {
-      await this.userRepo.add(request)
+    if (!(await this.userRepo.exists(userData))) {
+      await this.userRepo.add(userData)
     }
 
-    return right(request)
+    return userData
   }
 }
