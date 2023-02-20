@@ -1,4 +1,9 @@
-import { HttpResponse } from '../ports'
+import { HttpResponse } from '@/web-controllers/ports'
+
+export const ok = (data: any): HttpResponse => ({
+  statusCode: 200,
+  body: data
+})
 
 export const created = (data: any): HttpResponse => ({
   statusCode: 201,
